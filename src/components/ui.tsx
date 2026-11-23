@@ -3,8 +3,15 @@ import { company } from '../config'
 
 export function Brand() {
   return <a className="brand" href="/#accueil" aria-label={company.name + ' — Accueil'}>
-    <img className="brand-icon" src="/favicon.svg?v=2" alt="" width="48" height="48" />
-    <span><strong>CHD<span>.</span></strong><small>DRAPEAUX</small></span>
+    <img
+      className="brand-logo"
+      src="/images/chd-logo-small.webp"
+      srcSet="/images/chd-logo-small.webp 320w, /images/chd-logo.webp 640w"
+      sizes="(max-width: 650px) 107px, 160px"
+      alt=""
+      width="320"
+      height="201"
+    />
   </a>
 }
 

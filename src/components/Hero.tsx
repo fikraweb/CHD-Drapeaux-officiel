@@ -1,9 +1,11 @@
+import HeroFlags from './HeroFlags'
 import { ArrowDown } from 'lucide-react'
 import { Eyebrow, QuoteLink } from './ui'
 
 export default function Hero() {
   return <section className="hero" id="accueil">
-    <picture><source media="(max-width: 680px)" srcSet="/images/hero-small.webp" /><img src="/images/hero.webp" alt="Drapeaux marocains sur mâts devant un bâtiment institutionnel" fetchPriority="high" width="1536" height="1024" /></picture>
+    <picture><source media="(max-width: 680px)" srcSet="/images/hero-institution-small.webp" /><img src="/images/hero-institution.webp" alt="" fetchPriority="high" width="1536" height="1024" /></picture>
+    <HeroFlags />
     <div className="wrap hero-inner">
       <Eyebrow>FABRICANT DE DRAPEAUX AU MAROC</Eyebrow>
       <h1>Des drapeaux qui représentent vos institutions</h1>
