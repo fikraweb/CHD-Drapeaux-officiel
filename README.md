@@ -17,7 +17,7 @@ npm run preview
 
 Renseigner les coordonnées dans [src/config.ts](src/config.ts). Le numéro WhatsApp doit être au format international. Utiliser l’URL d’intégration Google Maps pour `mapsEmbedUrl`.
 
-- Avec `quoteEndpoint`, le formulaire envoie les champs et la pièce jointe facultative via POST multipart. Le service doit renvoyer un statut HTTP 2xx après traitement et valider les données et fichiers côté serveur. Autoriser l’origine du site si le service est hébergé sur un autre domaine.
+- Avec `quoteEndpoint`, le formulaire envoie les champs et la pièce jointe facultative via POST multipart. Pour les drapeaux internationaux, le champ multipart répété `countries` contient les codes ISO 3166-1 alpha-2. Le service doit renvoyer un statut HTTP 2xx après traitement et valider les données et fichiers côté serveur. Autoriser l’origine du site si le service est hébergé sur un autre domaine.
 - Avec un numéro WhatsApp et sans service de réception, le site propose un lien vers une conversation préremplie. Le visiteur envoie ensuite lui-même son message.
 - Sans canal configuré, le visiteur peut télécharger le récapitulatif de sa demande.
 

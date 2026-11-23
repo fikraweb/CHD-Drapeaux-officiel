@@ -1,5 +1,7 @@
-import { useEffect, useState, type FormEvent } from 'react'
-import { ArrowUpRight, CheckCircle2, Download, Send } from 'lucide-react'
+import { useRef, useState, type FormEvent } from 'react'
+import CountryPicker from './CountryPicker'
+import { countries } from '../countries'
+import { ArrowLeft, ArrowUpRight, CheckCircle2, Download, Send } from 'lucide-react'
 import { company, products, whatsappUrl } from '../config'
 import { Eyebrow } from './ui'
 
@@ -11,26 +13,26 @@ const fields = [
 ]
 
 export default function QuoteForm() {
-  const [type, setType] = useState('')
+  const product = new URLSearchParams(window.location.search).get('type')
+  const [type, setType] = useState(() => products.find(item => item.id === product)?.id ?? '')
+  const [selectedCountries, setSelectedCountries] = useState<string[]>([])
+  const [countryError, setCountryError] = useState(false)
+  const countryPanel = useRef<HTMLDetailsElement>(null)
   const [summary, setSummary] = useState('')
   const [status, setStatus] = useState<'idle' | 'ready' | 'sending' | 'sent' | 'error' | 'file-too-large'>('idle')
 
-  useEffect(() => {
-    function selectProduct() {
-      const id = window.location.hash.split('/')[1]
-      if (window.location.hash.startsWith('#devis/') && products.some(product => product.id === id)) {
-        setType(id)
-        document.getElementById('devis')?.scrollIntoView()
-      }
-    }
-    selectProduct()
-    window.addEventListener('hashchange', selectProduct)
-    return () => window.removeEventListener('hashchange', selectProduct)
-  }, [])
-
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
+    const requestedCountries = type === 'internationaux' ? countries.filter(country => selectedCountries.includes(country.code)) : []
+    if (type === 'internationaux' && !requestedCountries.length && countryPanel.current) {
+      setCountryError(true)
+      countryPanel.current.open = true
+      countryPanel.current.querySelector<HTMLInputElement>('input[type="search"]')?.focus()
+      return
+    }
+
     const data = new FormData(event.currentTarget)
+    for (const country of requestedCountries) data.append('countries', country.code)
     const file = data.get('reference')
     if (file instanceof File && file.size > 10 * 1024 * 1024) {
       setStatus('file-too-large')
@@ -40,6 +42,7 @@ export default function QuoteForm() {
       'Bonjour, je souhaite recevoir un devis pour mon projet.',
       ...fields.map(field => `${field.label} : ${data.get(field.name)}`),
       `Type de drapeau : ${products.find(product => product.id === type)?.title || 'À déterminer'}`,
+      ...(requestedCountries.length ? [`Pays : ${requestedCountries.map(country => country.name).join(', ')}`] : []),
       `Quantité : ${data.get('quantity')}`,
       `Dimensions : ${data.get('dimensions') || 'À déterminer'}`,
       `Description : ${data.get('description')}`,
@@ -69,16 +72,21 @@ export default function QuoteForm() {
   }
 
   const whatsapp = whatsappUrl(summary)
-  return <section id="devis" className="section quote"><div className="wrap quote-grid">
-    <div className="quote-intro"><Eyebrow>DEMANDE DE DEVIS</Eyebrow><h2>Votre projet, notre savoir-faire</h2><p>Vous recherchez des drapeaux adaptés à votre institution, votre entreprise ou votre événement ? Contactez-nous pour recevoir une proposition adaptée à vos besoins.</p></div>
+  return <section id="devis" className="section quote quote-page"><div className="wrap quote-grid">
+    <div className="quote-intro"><a className="quote-back" href="/#produits"><ArrowLeft size={17} /> Retour aux produits</a><Eyebrow>DEMANDE DE DEVIS</Eyebrow><h1>Votre projet, notre savoir-faire</h1><p>Vous recherchez des drapeaux adaptés à votre institution, votre entreprise ou votre événement ? Contactez-nous pour recevoir une proposition adaptée à vos besoins.</p></div>
     <form onSubmit={submit} className="quote-form" onChange={() => { if (status !== 'sending') setStatus('idle') }}>
       <fieldset disabled={status === 'sending'}>
         <legend>Décrivez votre projet</legend>
         <p className="form-note">Les champs marqués d’un astérisque sont obligatoires.</p>
         <div className="form-fields">
           {fields.map(({ label, ...props }) => <label key={props.name}>{label} *<input {...props} maxLength={160} /></label>)}
-          <label>Type de drapeau *<select name="type" value={type} onChange={event => setType(event.target.value)} required><option value="">Choisir une catégorie</option>{products.map(product => <option key={product.id} value={product.id}>{product.title}</option>)}<option value="autre">À déterminer</option></select></label>
+          <label>Type de drapeau *<select name="type" value={type} onChange={event => { setType(event.target.value); setCountryError(false) }} required><option value="">Choisir une catégorie</option>{products.map(product => <option key={product.id} value={product.id}>{product.title}</option>)}<option value="autre">À déterminer</option></select></label>
           <label>Quantité souhaitée *<input name="quantity" type="number" min="1" step="1" required /></label>
+          {type === 'internationaux' && <CountryPicker selected={selectedCountries} invalid={countryError} panel={countryPanel} onChange={codes => {
+            setSelectedCountries(codes)
+            setCountryError(false)
+            setStatus('idle')
+          }} />}
           <label className="full">Dimensions souhaitées<input name="dimensions" placeholder="Ex. 100 × 150 cm" maxLength={160} /></label>
           <label className="full">Description du besoin *<textarea name="description" rows={4} required maxLength={3000} placeholder="Précisez l’usage, les finitions et le délai souhaité." /></label>
           {company.quoteEndpoint && <label className="full">Image ou fichier de référence (10 Mo max.)<input name="reference" type="file" accept="image/*,.pdf" /></label>}
