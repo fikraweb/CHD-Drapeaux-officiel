@@ -1,9 +1,9 @@
-import { ArrowUpRight, Flag } from 'lucide-react'
+import { ArrowUpRight } from 'lucide-react'
 import { company } from '../config'
 
 export function Brand() {
   return <a className="brand" href="/#accueil" aria-label={company.name + ' — Accueil'}>
-    <span className="brand-icon"><Flag strokeWidth={1.8} /></span>
+    <img className="brand-icon" src="/favicon.svg?v=2" alt="" width="48" height="48" />
     <span><strong>CHD<span>.</span></strong><small>DRAPEAUX</small></span>
   </a>
 }

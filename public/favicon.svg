@@ -1,1 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect width="48" height="48" rx="8" fill="#10243a"/><path d="M13 37V11m1 2c8-7 14 5 23-1v15c-9 6-15-6-23 1" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round"/><path d="M17 16c6-3 11 3 17 0v9c-6 3-11-3-17 0" fill="#c62828"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="case" x1="0" y1="0" x2="1" y2="1" gradientUnits="objectBoundingBox">
+      <stop stop-color="#395675"/>
+      <stop offset=".42" stop-color="#1b344e"/>
+      <stop offset="1" stop-color="#0b192b"/>
+    </linearGradient>
+    <linearGradient id="ribbon" x1="0" y1="0" x2="1" y2=".65">
+      <stop stop-color="#ff8278"/>
+      <stop offset=".32" stop-color="#e63e3a"/>
+      <stop offset=".65" stop-color="#a91627"/>
+      <stop offset="1" stop-color="#ec4c45"/>
+    </linearGradient>
+    <linearGradient id="metal">
+      <stop stop-color="#8298ad"/>
+      <stop offset=".42" stop-color="#fff"/>
+      <stop offset="1" stop-color="#a5b8ca"/>
+    </linearGradient>
+  </defs>
+  <rect x="3" y="6" width="58" height="56" rx="12" fill="#091625"/>
+  <rect x="3.5" y="2.5" width="57" height="55" rx="11.5" fill="url(#case)" stroke="#56718b"/>
+  <path d="M10 16v-2a5 5 0 0 1 5-5h33" fill="none" stroke="#d3e5f9" stroke-opacity=".28" stroke-linecap="round"/>
+  <path d="M22 22c11-13 17 2 31-8v20c-14 10-20-4-31 8z" fill="#061321" opacity=".55"/>
+  <path d="M21 21c11-12 17 2 31-7v19c-14 10-20-4-31 8z" fill="#781424"/>
+  <path d="M20 18c11-12 17 2 31-7v18c-14 9-20-5-31 7z" fill="url(#ribbon)"/>
+  <path d="M22 18c10-9 17 3 28-6" fill="none" stroke="#ffd0c7" stroke-opacity=".64" stroke-linecap="round"/>
+  <path d="M36 16c1 7 0 12-2 18 4 1 7 1 11-1 2-7 1-13 0-17-3 1-6 1-9 0z" fill="#821121" opacity=".23"/>
+  <rect x="15" y="15" width="5" height="35" rx="2.5" fill="#081421" transform="translate(2 2)"/>
+  <rect x="15" y="15" width="5" height="35" rx="2.5" fill="url(#metal)"/>
+  <circle cx="17.5" cy="14" r="3.25" fill="#e6eef5"/>
+</svg>
