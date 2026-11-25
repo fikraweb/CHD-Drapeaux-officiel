@@ -2,7 +2,7 @@ export const company = {
   name: 'CHD Drapeaux',
   country: 'Maroc',
   phone: '',
-  whatsapp: '',
+  whatsapp: '+212 663-211774',
   email: '',
   address: '',
   hours: '',
