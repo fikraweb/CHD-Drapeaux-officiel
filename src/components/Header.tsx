@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import { MapPin, Menu, X } from 'lucide-react'
+import { ArrowUpRight, MapPin, Menu, X } from 'lucide-react'
 import { company, navigation } from '../config'
-import { Brand, QuoteLink } from './ui'
+import { Brand } from './ui'
 
 export default function Header() {
   const [open, setOpen] = useState(false)
@@ -24,9 +24,8 @@ export default function Header() {
         <Brand />
         <nav id="navigation" className={open ? 'navigation open' : 'navigation'} aria-label="Navigation principale">
           {navigation.map(([label, id]) => <a key={id} href={`/#${id}`} onClick={() => setOpen(false)}>{label}</a>)}
-          <div className="mobile-quote" onClick={() => setOpen(false)}><QuoteLink /></div>
         </nav>
-        <div className="desktop-quote"><QuoteLink /></div>
+        <div className="header-contact"><a className="button" href="/#contact">Nous contacter <ArrowUpRight size={17} /></a></div>
         <button id="menu-toggle" className="menu-toggle" type="button" onClick={() => setOpen(!open)} aria-expanded={open} aria-controls="navigation" aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'}>{open ? <X /> : <Menu />}</button>
       </div>
     </header>

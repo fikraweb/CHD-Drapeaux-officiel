@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { catalog, catalogGroups } from '../catalog'
-import { QuoteLink } from './ui'
+const priceFormat = new Intl.NumberFormat('fr-MA', { style: 'currency', currency: 'MAD', currencyDisplay: 'code', minimumFractionDigits: 0, maximumFractionDigits: 2 })
 
 function flagEmoji(code: string) {
   return String.fromCodePoint(...Array.from(code, letter => 0x1F1E6 + letter.charCodeAt(0) - 65))
@@ -18,8 +18,8 @@ export default function Products() {
     <p className="catalog-count" role="status">{models.length} modèles <span>· Visuels illustratifs par gamme</span></p>
     <div className="product-grid">{models.map(product => <article key={product.id} className="product">
       <div className="image-frame"><img src={`/images/catalogue/${product.image}.webp`} alt="" width="656" height="600" loading="lazy" />{product.country && <span className="catalog-flag" aria-hidden="true">{flagEmoji(product.country)}</span>}</div>
-      <div className="product-copy"><h3>{product.title}</h3><p>{product.detail}</p><QuoteLink className="text-link" product={product.category} model={product.id} /></div>
+      <div className="product-copy"><h3>{product.title}</h3><p>{product.detail}</p><strong className="catalog-price">{priceFormat.format(product.price)}</strong></div>
     </article>)}</div>
-    <div className="catalog-custom"><p>Vous avez un autre format ou un modèle sur mesure en tête ?</p><QuoteLink product="personnalises" /></div>
+    <div className="catalog-custom"><p>Vous avez un autre format ou un modèle sur mesure en tête ?</p><a className="button" href="#contact">Nous contacter</a></div>
   </div></section>
 }

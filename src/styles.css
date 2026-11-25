@@ -45,7 +45,7 @@ p,dd{line-height:1.7}
 .outline:hover{background:white;color:var(--navy)}
 .outline-dark{background:transparent;color:var(--navy);border-color:#aeb9c5}
 .outline-dark:hover{background:var(--light)}
-.mobile-quote,.menu-toggle{display:none}
+.menu-toggle{display:none}
 .hero{position:relative;isolation:isolate;display:flex;align-items:center;min-height:clamp(560px,42vw,760px);background:var(--ink);color:#fff;overflow:hidden}
 .hero picture,.hero picture img,.hero::before{position:absolute;inset:0;width:100%;height:100%}
 .hero picture{left:auto;width:76%;z-index:-3}
@@ -61,8 +61,8 @@ p,dd{line-height:1.7}
 .hero .actions{margin-top:31px}
 .hero .button{padding-inline:21px;min-height:49px}
 .hero-line{position:absolute;bottom:0;left:0;width:100%;height:2px;background:var(--gold)}
-.hero .red,.desktop-quote .button{background:var(--gold);color:#1e1a14}
-.hero .red:hover,.desktop-quote .button:hover{background:#f1d099}
+.hero .red,.header-contact .button{background:var(--gold);color:#1e1a14}
+.hero .red:hover,.header-contact .button:hover{background:#f1d099}
 .expertise .intro{max-width:800px}
 .advantages{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
 .advantages article{padding:24px;border:1px solid var(--line);border-radius:4px}
@@ -81,9 +81,6 @@ p,dd{line-height:1.7}
 .product:nth-child(n+4) .image-frame{aspect-ratio:2.35}
 .product-copy{padding:23px;display:flex;flex-direction:column;flex:1}
 .product-copy p{margin-bottom:13px}
-.button.text-link{align-self:flex-start;justify-content:start;padding:0;margin-top:auto;color:#ac2222;background:transparent}
-.button.text-link:hover{color:#55380e}
-.catalog .button.text-link{color:var(--gold-dark)}
 .process{background:var(--ink);color:#fff}
 .process .eyebrow,.process .steps li span{color:var(--gold)}
 .process .steps li{border-color:#ffffff2c}
@@ -127,7 +124,7 @@ p,dd{line-height:1.7}
 .contact-list dd{font-size:14px;color:var(--muted);margin:2px 0 0;overflow-wrap:anywhere}
 .contact-photo,.contact-grid iframe{width:100%;height:300px;border:0;border-radius:4px}
 .footer{background:var(--ink);color:white;padding-top:54px}
-.footer-grid{display:grid;grid-template-columns:1.2fr .8fr 1.1fr .8fr;gap:26px;padding-bottom:35px}
+.footer-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:26px;padding-bottom:35px}
 .footer .brand-logo{width:160px}
 .footer .brand::after{content:"";position:absolute;inset:0;pointer-events:none;background:url(/images/chd-logo.webp) center/100% 100% no-repeat;clip-path:polygon(0 62%,14% 55%,18% 48%,80% 48%,84% 55%,100% 56%,100% 100%,0 100%);filter:brightness(0) invert(1)}
 .footer p,.footer a:not(.brand){font-size:13px;color:#d4dfe9}
@@ -149,12 +146,12 @@ p,dd{line-height:1.7}
   .wrap{width:calc(100% - 56px)}
   .navigation{gap:14px;font-size:12px}
   .header-inner{gap:13px}
-  .desktop-quote .button{padding-inline:10px}
+  .header-contact .button{padding-inline:10px}
 }
 @media(max-width:900px){
   .section{padding:65px 0}
   .header-inner{min-height:80px}
-  .desktop-quote{margin-left:auto}
+  .header-contact{margin-left:auto}
   .menu-toggle{display:grid;place-items:center;border:1px solid var(--line);border-radius:4px;background:white;color:var(--navy);width:44px;height:44px}
   .navigation{position:absolute;display:grid;top:100%;left:0;right:0;visibility:hidden;opacity:0;transform:translateY(-6px);padding:12px 28px 18px;background:white;box-shadow:0 9px 16px #10243a1a;gap:0;font-size:15px;transition:opacity .2s,transform .2s,visibility .2s}
   .navigation.open{opacity:1;transform:none;visibility:visible}
@@ -175,8 +172,8 @@ p,dd{line-height:1.7}
   .topbar a{display:none}
   .header-inner{gap:9px}
   .header .brand-logo{width:102px}
-  .desktop-quote .button{font-size:11px;gap:4px;min-height:44px;padding-inline:8px}
-  .desktop-quote svg{width:13px}
+  .header-contact .button{font-size:11px;gap:4px;min-height:44px;padding-inline:8px}
+  .header-contact svg{width:13px}
   .hero{display:block;min-height:0;padding-bottom:2px}
   .hero-inner{padding-block:46px 28px}
   .hero picture{position:relative;inset:auto;display:block;width:100%;height:auto;aspect-ratio:1.3;z-index:auto}
@@ -254,3 +251,5 @@ p,dd{line-height:1.7}
 @media(max-width:650px){.catalog-custom{align-items:flex-start;flex-direction:column}}
 .catalog .product .image-frame{position:relative}
 .catalog-flag{position:absolute;top:10px;right:10px;display:grid;place-items:center;min-width:39px;min-height:31px;padding:2px 5px;background:#fff;border-radius:3px;font-size:21px;box-shadow:0 2px 6px #10243a28}
+
+.catalog-price{display:block;margin-top:auto;padding-top:4px;color:var(--gold-dark);font-size:22px;font-weight:850;line-height:1.25;font-variant-numeric:tabular-nums}

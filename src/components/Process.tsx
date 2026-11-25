@@ -1,4 +1,4 @@
-import { Eyebrow, QuoteLink } from './ui'
+import { Eyebrow } from './ui'
 
 const steps = [
   ['Sélection des matériaux', 'Choix de matériaux adaptés aux besoins et à l’utilisation du drapeau.'],
@@ -12,7 +12,7 @@ export default function Process() {
     <div className="process-image image-frame"><img src="/images/photo-5.webp" alt="Machine à coudre industrielle confectionnant un drapeau rouge" width="512" height="512" loading="lazy" /></div>
     <div><Eyebrow>NOTRE SAVOIR-FAIRE</Eyebrow><h2>Le souci du détail, à chaque étape</h2>
       <ol className="steps">{steps.map(([title, description], index) => <li key={title}><span aria-hidden="true">0{index + 1}</span><div><h3>{title}</h3><p>{description}</p></div></li>)}</ol>
-      <QuoteLink className="red" />
+      <a className="button red" href="#produits">Voir le catalogue</a>
     </div>
   </div></section>
 }
