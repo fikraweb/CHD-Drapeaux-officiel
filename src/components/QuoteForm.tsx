@@ -1,5 +1,6 @@
 import { useRef, useState, type FormEvent } from 'react'
 import CountryPicker from './CountryPicker'
+import { catalog } from '../catalog'
 import { countries } from '../countries'
 import { ArrowLeft, ArrowUpRight, CheckCircle2, Download, Send } from 'lucide-react'
 import { company, products, whatsappUrl } from '../config'
@@ -13,9 +14,11 @@ const fields = [
 ]
 
 export default function QuoteForm() {
-  const product = new URLSearchParams(window.location.search).get('type')
-  const [type, setType] = useState(() => products.find(item => item.id === product)?.id ?? '')
-  const [selectedCountries, setSelectedCountries] = useState<string[]>([])
+  const query = new URLSearchParams(window.location.search)
+  const candidate = catalog.find(item => item.id === query.get('modele'))
+  const [type, setType] = useState(() => candidate?.category ?? products.find(item => item.id === query.get('type'))?.id ?? '')
+  const [selectedCountries, setSelectedCountries] = useState<string[]>(() => candidate?.country ? [candidate.country] : [])
+  const model = candidate?.category === type ? candidate : undefined
   const [countryError, setCountryError] = useState(false)
   const countryPanel = useRef<HTMLDetailsElement>(null)
   const [summary, setSummary] = useState('')
@@ -32,6 +35,7 @@ export default function QuoteForm() {
     }
 
     const data = new FormData(event.currentTarget)
+    if (model) data.append('model', model.id)
     for (const country of requestedCountries) data.append('countries', country.code)
     const file = data.get('reference')
     if (file instanceof File && file.size > 10 * 1024 * 1024) {
@@ -42,6 +46,7 @@ export default function QuoteForm() {
       'Bonjour, je souhaite recevoir un devis pour mon projet.',
       ...fields.map(field => `${field.label} : ${data.get(field.name)}`),
       `Type de drapeau : ${products.find(product => product.id === type)?.title || 'À déterminer'}`,
+      ...(model ? [`Modèle de référence : ${model.title} — ${model.detail}`] : []),
       ...(requestedCountries.length ? [`Pays : ${requestedCountries.map(country => country.name).join(', ')}`] : []),
       `Quantité : ${data.get('quantity')}`,
       `Dimensions : ${data.get('dimensions') || 'À déterminer'}`,
@@ -78,6 +83,7 @@ export default function QuoteForm() {
       <fieldset disabled={status === 'sending'}>
         <legend>Décrivez votre projet</legend>
         <p className="form-note">Les champs marqués d’un astérisque sont obligatoires.</p>
+        {model && <div className="quote-model"><span>Modèle de référence</span><strong>{model.title}</strong><p>{model.detail}</p></div>}
         <div className="form-fields">
           {fields.map(({ label, ...props }) => <label key={props.name}>{label} *<input {...props} maxLength={160} /></label>)}
           <label>Type de drapeau *<select name="type" value={type} onChange={event => { setType(event.target.value); setCountryError(false) }} required><option value="">Choisir une catégorie</option>{products.map(product => <option key={product.id} value={product.id}>{product.title}</option>)}<option value="autre">À déterminer</option></select></label>

@@ -1,12 +1,25 @@
-import { products } from '../config'
+import { useState } from 'react'
+import { catalog, catalogGroups } from '../catalog'
 import { QuoteLink } from './ui'
 
+function flagEmoji(code: string) {
+  return String.fromCodePoint(...Array.from(code, letter => 0x1F1E6 + letter.charCodeAt(0) - 65))
+}
+
 export default function Products() {
+  const [group, setGroup] = useState<typeof catalogGroups[number]['id']>('reception')
+  const models = catalog.filter(product => product.group === group)
+
   return <section id="produits" className="section catalog"><div className="wrap">
-    <div className="intro center"><h2>Nos gammes de drapeaux</h2><p>Des drapeaux pensés pour chaque lieu, chaque usage et chaque occasion.</p></div>
-    <div className="product-grid">{products.map(product => <article key={product.id} className="product">
-      <div className="image-frame"><img src={`/images/photo-${product.image}.webp`} alt={product.alt} width="512" height="512" loading="lazy" /></div>
-      <div className="product-copy"><h3>{product.title}</h3><p>{product.description}</p><QuoteLink className="text-link" product={product.id} /></div>
+    <div className="intro center"><h2>Catalogue de drapeaux</h2><p>Drapeaux sur pied, modèles de bureau et formats pour vos réceptions.</p></div>
+    <div className="catalog-filters" role="group" aria-label="Gammes de produits">
+      {catalogGroups.map(item => <button key={item.id} type="button" aria-pressed={group === item.id} onClick={() => setGroup(item.id)}>{item.title}</button>)}
+    </div>
+    <p className="catalog-count" role="status">{models.length} modèles <span>· Visuels illustratifs par gamme</span></p>
+    <div className="product-grid">{models.map(product => <article key={product.id} className="product">
+      <div className="image-frame"><img src={`/images/catalogue/${product.image}.webp`} alt="" width="656" height="600" loading="lazy" />{product.country && <span className="catalog-flag" aria-hidden="true">{flagEmoji(product.country)}</span>}</div>
+      <div className="product-copy"><h3>{product.title}</h3><p>{product.detail}</p><QuoteLink className="text-link" product={product.category} model={product.id} /></div>
     </article>)}</div>
+    <div className="catalog-custom"><p>Vous avez un autre format ou un modèle sur mesure en tête ?</p><QuoteLink product="personnalises" /></div>
   </div></section>
 }

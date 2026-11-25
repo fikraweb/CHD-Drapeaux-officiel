@@ -19,10 +19,13 @@ export function Eyebrow({ children }: { children: string }) {
   return <p className="eyebrow">{children}</p>
 }
 
-export function quotePath(product?: string) {
-  return product ? `/devis?type=${encodeURIComponent(product)}` : '/devis'
+export function quotePath(product?: string, model?: string) {
+  const query = new URLSearchParams()
+  if (product) query.set('type', product)
+  if (model) query.set('modele', model)
+  return query.size ? `/devis?${query}` : '/devis'
 }
 
-export function QuoteLink({ className = '', product }: { className?: string; product?: string }) {
-  return <a className={`button ${className}`} href={quotePath(product)}>Demander un devis <ArrowUpRight size={17} /></a>
+export function QuoteLink({ className = '', product, model }: { className?: string; product?: string; model?: string }) {
+  return <a className={`button ${className}`} href={quotePath(product, model)}>Demander un devis <ArrowUpRight size={17} /></a>
 }
