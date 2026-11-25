@@ -58,9 +58,10 @@ p,dd{line-height:1.7}
 .hero h1{font-size:clamp(36px,3.95vw,60px);font-weight:850;line-height:1.07;letter-spacing:-.055em}
 .hero h1 em{display:block;color:#eac899;font-style:normal}
 .hero-description{max-width:435px;margin-top:16px;color:#e4e9ed;font-size:clamp(14px,1.25vw,17px);line-height:1.55}
-.hero-range{display:flex;flex-wrap:wrap;gap:10px 15px;margin:22px 0;padding:0;list-style:none}
+.hero-range{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) minmax(0,1.38fr);gap:12px;margin:22px 0;padding:0;list-style:none}
 .hero-range li{display:flex;align-items:center;gap:8px;color:#e9edf0;line-height:1.25;font-size:11px;font-weight:750}
-.hero-range svg{box-sizing:content-box;flex:none;padding:6px;border:1px solid #dfb77350;border-radius:4px;color:#eac899}
+.hero-range svg{width:24px;height:24px;flex:none;color:#eac899;stroke-width:1.6}
+.hero-range li+li{border-left:1px solid #dfb77354;padding-left:12px}
 .hero .hero-cta{min-height:46px;padding-inline:19px;background:#f2dfc0;color:#172331}
 .hero .hero-cta:hover{background:#fff2dd}
 .actions{display:flex;flex-wrap:wrap;gap:12px}
@@ -315,7 +316,10 @@ body:has(.cart-dialog[open]){overflow:hidden}
   .hero picture img{object-position:center}
   .hero::before{display:none}
 }
+@media(max-width:1050px){
+  .hero-range{max-width:360px;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px 9px}
+  .hero-range li:nth-child(odd){border-left:0;padding-left:0}
+}
 @media(max-width:370px){
-  .hero-range{gap:8px}
-  .hero-range svg{width:15px;padding:5px}
+  .hero-range svg{width:21px;height:21px}
 }

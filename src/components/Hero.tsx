@@ -1,4 +1,4 @@
-import { ArrowRight, Flag, Globe2, Landmark } from 'lucide-react'
+import { ArrowRight, Gem, Landmark, ShieldCheck, Star } from 'lucide-react'
 
 export default function Hero() {
   return <section className="hero" id="accueil">
@@ -6,11 +6,12 @@ export default function Hero() {
       <div className="hero-copy">
         <p className="hero-signature">CHD Drapeaux</p>
         <h1>Les couleurs du monde, <em>le savoir-faire du Maroc</em></h1>
-        <p className="hero-description">Drapeaux de bureau, de réception et de cérémonie pour les entreprises et les institutions.</p>
+        <p className="hero-description">Des drapeaux premium pour vos bureaux, hôtels et espaces de prestige.</p>
         <ul className="hero-range" aria-label="Les points forts de la collection">
-          <li><Flag size={19} aria-hidden="true" /> Modèles de bureau<br /> et sur pied</li>
-          <li><Globe2 size={19} aria-hidden="true" /> 50 pays<br /> au choix</li>
-          <li><Landmark size={19} aria-hidden="true" /> Supports de<br /> cérémonie</li>
+          <li><Gem aria-hidden="true" /> <span>Qualité premium</span></li>
+          <li><Star aria-hidden="true" /> <span>Finitions élégantes</span></li>
+          <li><ShieldCheck aria-hidden="true" /> <span>Support doré solide</span></li>
+          <li><Landmark aria-hidden="true" /> <span>Idéal pour bureaux et institutions</span></li>
         </ul>
         <a className="button hero-cta" href="#produits">Découvrir la collection <ArrowRight size={17} /></a>
       </div>
