@@ -13,7 +13,7 @@ import Process from './components/Process'
 import Gallery from './components/Gallery'
 import Clients from './components/Clients'
 import QuoteForm from './components/QuoteForm'
-import Contact, { contactWhatsapp } from './components/Contact'
+import { contactWhatsapp } from './config'
 import Footer from './components/Footer'
 import { Brand, quotePath } from './components/ui'
 import './styles.css'
@@ -60,7 +60,7 @@ function App() {
   return <>
     <a className="skip" href="#contenu">Aller au contenu</a>
     <Header count={cart.count} onOpenCart={() => cartDialog.current?.showModal()} />
-    <main id="contenu">{isQuote ? <QuoteForm /> : product ? <ProductPage product={product} onAdd={addToCart} /> : <><Hero /><Products onAdd={addToCart} /><Expertise /><Process /><Gallery /><Clients /><Contact /></>}</main>
+    <main id="contenu">{isQuote ? <QuoteForm /> : product ? <ProductPage product={product} onAdd={addToCart} /> : <><Hero /><Products onAdd={addToCart} /><Expertise /><Process /><Gallery /><Clients /></>}</main>
     <Footer />
     <div className="sr-only" role="status">{announcement}</div>
     <Cart dialog={cartDialog} lines={cart.lines} onChange={cart.change} onRemove={cart.remove} />

@@ -14,6 +14,8 @@ export const company = {
 export const whatsappUrl = (message: string) =>
   company.whatsapp ? `https://wa.me/${company.whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(message)}` : ''
 
+export const contactWhatsapp = whatsappUrl('Bonjour, je souhaite des informations sur vos drapeaux.')
+
 export const navigation = [
   ['Accueil', 'accueil'],
   ['Nos produits', 'produits'],
