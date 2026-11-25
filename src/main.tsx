@@ -1,6 +1,8 @@
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { MessageCircle } from 'lucide-react'
+import { useCart } from './cart'
+import Cart from './components/Cart'
 import Header from './components/Header'
 import Hero from './components/Hero'
 import Expertise from './components/Expertise'
@@ -25,6 +27,16 @@ function redirectLegacyQuote() {
 }
 
 function App() {
+  const cart = useCart()
+  const cartDialog = useRef<HTMLDialogElement>(null)
+  const [announcement, setAnnouncement] = useState('')
+
+  function addToCart(key: string, title: string) {
+    cart.change(key, 1)
+    setAnnouncement(`${title} ajouté au panier.`)
+    cartDialog.current?.showModal()
+  }
+
   useEffect(() => {
     if (isQuote) document.title = 'Demander un devis — CHD Drapeaux'
     if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return
@@ -43,9 +55,11 @@ function App() {
 
   return <>
     <a className="skip" href="#contenu">Aller au contenu</a>
-    <Header />
-    <main id="contenu">{isQuote ? <QuoteForm /> : <><Hero /><Products /><Expertise /><Process /><Gallery /><Clients /><Contact /></>}</main>
+    <Header count={cart.count} onOpenCart={() => cartDialog.current?.showModal()} />
+    <main id="contenu">{isQuote ? <QuoteForm /> : <><Hero /><Products onAdd={addToCart} /><Expertise /><Process /><Gallery /><Clients /><Contact /></>}</main>
     <Footer />
+    <div className="sr-only" role="status">{announcement}</div>
+    <Cart dialog={cartDialog} lines={cart.lines} onChange={cart.change} onRemove={cart.remove} />
     <a className="whatsapp" href={contactWhatsapp || '/#contact'} aria-label={contactWhatsapp ? 'Contacter CHD Drapeaux sur WhatsApp' : 'Voir les informations de contact WhatsApp'} title="WhatsApp"><MessageCircle size={28} strokeWidth={1.9} /></a>
   </>
 }
