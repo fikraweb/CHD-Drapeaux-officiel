@@ -10,7 +10,6 @@ import Hero from './components/Hero'
 import Expertise from './components/Expertise'
 import Products from './components/Products'
 import Process from './components/Process'
-import Gallery from './components/Gallery'
 import Clients from './components/Clients'
 import QuoteForm from './components/QuoteForm'
 import { contactWhatsapp } from './config'
@@ -60,7 +59,7 @@ function App() {
   return <>
     <a className="skip" href="#contenu">Aller au contenu</a>
     <Header count={cart.count} onOpenCart={() => cartDialog.current?.showModal()} />
-    <main id="contenu">{isQuote ? <QuoteForm /> : product ? <ProductPage product={product} onAdd={addToCart} /> : <><Hero /><Products onAdd={addToCart} /><Expertise /><Process /><Gallery /><Clients /></>}</main>
+    <main id="contenu">{isQuote ? <QuoteForm /> : product ? <ProductPage product={product} onAdd={addToCart} /> : <><Hero /><Products onAdd={addToCart} /><Expertise /><Process /><Clients /></>}</main>
     <Footer />
     <div className="sr-only" role="status">{announcement}</div>
     <Cart dialog={cartDialog} lines={cart.lines} onChange={cart.change} onRemove={cart.remove} />

@@ -20,7 +20,6 @@ export const navigation = [
   ['Accueil', 'accueil'],
   ['Nos produits', 'produits'],
   ['Notre savoir-faire', 'savoir-faire'],
-  ['Nos réalisations', 'realisations'],
   ['À propos', 'a-propos'],
   ['Contact', 'contact'],
 ]

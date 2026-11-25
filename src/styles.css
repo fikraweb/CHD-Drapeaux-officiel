@@ -95,12 +95,6 @@ p,dd{line-height:1.7}
 .steps li{display:flex;gap:15px;padding:15px 0;border-bottom:1px solid #d5dde5}
 .steps li span{color:#b52222;font-size:13px;font-weight:850;padding-top:3px}
 .steps p{margin-top:3px}
-.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
-.gallery figure{position:relative;margin:0;min-height:220px;overflow:hidden;border-radius:4px;isolation:isolate}
-.gallery figure:first-child{grid-column:span 2}
-.gallery figure:last-child{grid-column:span 2}
-.gallery .image-frame{position:absolute;inset:0;z-index:-1}
-.gallery figcaption{position:absolute;bottom:0;left:0;right:0;padding:28px 15px 12px;background:linear-gradient(transparent,#10243ae6);color:#fff;font-size:13px;font-weight:750;pointer-events:none}
 .sectors{display:grid;grid-template-columns:repeat(3,1fr);gap:0 26px}
 .sectors article{display:flex;align-items:flex-start;gap:14px;padding:19px 0;border-top:1px solid #dce3eb}
 .sectors svg{color:#a92323;flex:none}
@@ -176,9 +170,6 @@ p,dd{line-height:1.7}
   .advantages article{padding:18px}
   .product-copy{padding:16px}
   .process-image{min-height:0;height:auto;aspect-ratio:1.45}
-  .gallery{grid-template-columns:1fr 1fr;gap:8px}
-  .gallery figure{min-height:155px}
-  .gallery figcaption{padding-inline:9px;font-size:11px}
   .sectors{gap:0 14px}
   .sectors article{gap:8px}
   .sectors h3{font-size:15px}
