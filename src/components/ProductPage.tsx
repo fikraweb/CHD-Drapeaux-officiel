@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { ArrowLeft, ShoppingBag } from 'lucide-react'
-import { catalogGroups, catalogImage, catalogPath, priceFormat, catalogOptions, productCartKey, type CatalogProduct } from '../catalog'
+import { catalogGroups, catalogImage, catalogPath, priceFormat, catalogOptions, productCartKey, usesIllustrativePhoto, type CatalogProduct } from '../catalog'
 import { maxQuantity } from '../cart'
 import ProductZoom from './ProductZoom'
 import FlagSelect from './FlagSelect'
@@ -15,6 +15,8 @@ export default function ProductPage({ product, onAdd }: {
   const hasOptions = options.length > 0
   const option = options.find(item => item.code === code)
   const title = option ? `${product.title} · ${option.name}` : product.title
+  const illustrative = usesIllustrativePhoto(product.id, option?.code)
+  const photoAlt = illustrative ? 'Drapeaux de bureau, visuel illustratif' : title
   const image = catalogImage(product.id, option?.code, true)
   const group = catalogGroups.find(item => item.id === product.group)
 
@@ -28,12 +30,13 @@ export default function ProductPage({ product, onAdd }: {
   return <section className="section product-page"><div className="wrap">
     <a className="product-back" href={catalogPath(product.group)}><ArrowLeft size={17} /> Retour au catalogue</a>
     <div className="product-page-grid">
-      <ProductZoom key={image} src={image} title={title} />
+      <ProductZoom key={image} src={image} title={photoAlt} />
       <div className="product-page-copy">
         {group && <Eyebrow>{group.title}</Eyebrow>}
         <h1>{product.title}</h1>
         <p className="product-page-price">{priceFormat.format(product.price)}</p>
         <p className="product-page-detail">{product.detail}</p>
+        {illustrative && <p className="catalog-photo-note">Visuel illustratif du format de bureau.</p>}
         {product.features && <ul className="product-features">{product.features.map(feature => <li key={feature}>{feature}</li>)}</ul>}
         <form className="product-purchase" onSubmit={submit}>
           {hasOptions && <FlagSelect options={options} value={code} onChange={setCode} />}

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import FlagSelect from './FlagSelect'
 import { ShoppingBag } from 'lucide-react'
-import { catalog, catalogGroups, catalogImage, productPath, priceFormat, catalogOptions, productCartKey, type CatalogProduct } from '../catalog'
+import { catalog, catalogGroups, catalogImage, productPath, priceFormat, catalogOptions, productCartKey, usesIllustrativePhoto, type CatalogProduct } from '../catalog'
 
 function ProductCard({ product, onAdd }: { product: CatalogProduct; onAdd: (key: string, title: string) => void }) {
   const [code, setCode] = useState('')
@@ -9,12 +9,15 @@ function ProductCard({ product, onAdd }: { product: CatalogProduct; onAdd: (key:
   const hasOptions = options.length > 0
   const option = options.find(item => item.code === code)
   const title = option ? `${product.title} · ${option.name}` : product.title
+  const illustrative = usesIllustrativePhoto(product.id, option?.code)
+  const photoAlt = illustrative ? 'Drapeaux de bureau, visuel illustratif' : title
 
   return <article className="product">
-    <div className="image-frame"><img src={catalogImage(product.id, option?.code)} alt={title} loading="lazy" /></div>
+    <div className="image-frame"><img src={catalogImage(product.id, option?.code)} alt={photoAlt} loading="lazy" /></div>
     <div className="product-copy">
       <h3><a className="product-card-link" href={productPath(product.id)}>{product.title}</a></h3>
       <p>{product.detail}</p>
+      {illustrative && <p className="catalog-photo-note">Visuel illustratif</p>}
       {hasOptions && <FlagSelect options={options} value={code} onChange={setCode} />}
       <strong className="catalog-price">{priceFormat.format(product.price)}</strong>
       <button className="button catalog-add" type="button" disabled={hasOptions && !option} onClick={() => onAdd(productCartKey(product.id, option?.code), title)}>

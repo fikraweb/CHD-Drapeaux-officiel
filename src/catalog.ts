@@ -34,18 +34,23 @@ function deskFlagId(code: string) {
 
 export function catalogOptions(id: string) {
   if (id === standingFlagId) return standingFlagOptions
-  if (id === deskChoiceId) return internationalDesk
+  if (id === deskChoiceId) return deskCountryOptions
   return []
 }
 
+export function usesIllustrativePhoto(id: string, variant?: string) {
+  return id === deskChoiceId && (!variant || !internationalDeskCodes.includes(variant))
+}
+
 export function catalogImage(id: string, variant?: string, hd = false) {
+  if (usesIllustrativePhoto(id, variant)) return hd ? '/images/hero-signature.webp' : '/images/hero-signature-mobile.webp'
   const imageId = id === deskChoiceId ? deskFlagId(variant ?? 'US') : id + (variant ? `-${variant.toLowerCase()}` : '')
   return `/images/catalogue/${hd ? 'hd/' : ''}${imageId}.webp`
 }
 
 export function productCartKey(id: string, variant?: string) {
   if (!variant) return id
-  return id === deskChoiceId ? deskFlagId(variant) : `${id}:${variant}`
+  return id === deskChoiceId && internationalDeskCodes.includes(variant) ? deskFlagId(variant) : `${id}:${variant}`
 }
 
 export function productPath(id: string) {
@@ -58,6 +63,8 @@ export function catalogPath(group: CatalogProduct['group']) {
 
 const internationalDeskCodes = ['US', 'BH', 'BR', 'CN', 'ES', 'FI', 'GR', 'LB', 'MR', 'PS', 'SO']
 const internationalDesk = countries.filter(({ code }) => internationalDeskCodes.includes(code))
+const additionalDeskCodes = 'MA FR DE GB IT PT NL BE CH AT SE NO DK PL TR RU UA CA MX AR CL CO JP KR IN PK ID MY SG AU NZ EG DZ TN SA AE QA JO ZA'.split(' ')
+const deskCountryOptions = countries.filter(({ code }) => internationalDeskCodes.includes(code) || additionalDeskCodes.includes(code))
 
 export const catalog: CatalogProduct[] = [
   { id: 'reception-maroc', price: 799, group: 'reception', category: 'nationaux', title: 'Drapeau marocain prestige pour bureaux et hôtels', detail: 'Pour salles de réception, hôtels et espaces de représentation.' },
@@ -70,7 +77,7 @@ export const catalog: CatalogProduct[] = [
   { id: 'bureau-royal-29', price: 99.99, group: 'maroc', category: 'nationaux', title: 'Drapeau de bureau Maroc Royal – 29 cm', detail: 'Format de 29 cm · finitions brodées' },
   { id: 'table-maroc', price: 149.99, group: 'maroc', category: 'nationaux', title: 'Drapeau de bureau marocain haut de gamme', detail: 'Pour salles de réunion, événements et espaces d’accueil.' },
   { id: 'raie-bureau-maroc', price: 199.99, group: 'maroc', category: 'nationaux', title: 'Raie de bureau marocaine', detail: 'Modèle de bureau sur support individuel.' },
-  { id: deskChoiceId, price: 180, group: 'monde', category: 'internationaux', title: 'Drapeau de bureau Prestige – 40 cm, pays au choix', detail: 'Choisissez parmi les 11 pays de la collection internationale.' },
+  { id: deskChoiceId, price: 180, group: 'monde', category: 'internationaux', title: 'Drapeau de bureau Prestige – 40 cm, pays au choix', detail: `Choisissez parmi ${deskCountryOptions.length} pays.` },
   ...internationalDesk.map(({ code, name }): CatalogProduct => ({
     id: deskFlagId(code),
     group: 'monde',
