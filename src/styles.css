@@ -274,3 +274,32 @@ body:has(.cart-dialog[open]){overflow:hidden}
 .cart-checkout p:last-child,.cart-empty{color:var(--muted);font-size:13px}
 .cart-empty{padding-block:24px}
 .cart-total{font-weight:750}
+
+.catalog .product{position:relative}
+.product-card-link::after{content:"";position:absolute;inset:0;z-index:1}
+.product-card-link:hover{color:var(--gold-dark)}
+.product-card-link:focus-visible{outline:none}
+.product-card-link:focus-visible::after{outline:2px solid var(--gold-dark);outline-offset:-3px}
+.catalog .catalog-option,.catalog .catalog-add{position:relative;z-index:2}
+.product-page{background:#f8f5ef;padding-block:clamp(26px,5vw,72px)}
+.product-back{display:inline-flex;align-items:center;gap:8px;min-height:44px;margin-bottom:16px;color:var(--gold-dark);font-size:14px;font-weight:750}
+.product-back:hover{text-decoration:underline}
+.product-page-grid{display:grid;grid-template-columns:1.06fr 1fr;gap:clamp(25px,6vw,80px);align-items:start}
+.product-page-image{display:grid;place-items:center;min-height:420px;padding:clamp(14px,3vw,34px);background:#fff;border:1px solid #e9dfcf;border-radius:4px}
+.product-page-image img{width:100%;max-height:590px;object-fit:contain}
+.product-page-copy{padding-block:18px}
+.product-page-copy h1{font:400 clamp(34px,4.5vw,62px)/1.06 var(--display);letter-spacing:-.045em}
+.product-page-price{margin-top:16px;color:var(--gold-dark);font-size:clamp(24px,3vw,36px);font-weight:850}
+.product-page-detail,.product-features{margin:8px 0;color:var(--muted)}
+.product-features{padding-left:20px;list-style:disc;line-height:1.7}
+.product-purchase{margin-top:22px}
+.product-purchase-controls{display:flex;align-items:end;gap:12px}
+.product-purchase-controls label{display:grid;gap:5px;font-size:13px;font-weight:750}
+.product-purchase-controls input{width:83px;min-height:46px;border:1px solid var(--line);border-radius:3px;background:#fff;padding:8px}
+.product-purchase button:disabled{opacity:.5;cursor:default;transform:none}
+.product-order-note{margin-top:13px;color:var(--muted);font-size:13px}
+@media(max-width:650px){
+  .product-page-grid{grid-template-columns:1fr;gap:10px}
+  .product-page-image{min-height:0}
+  .product-page-image img{max-height:370px}
+}

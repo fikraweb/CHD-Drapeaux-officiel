@@ -13,6 +13,7 @@ export type CatalogProduct = {
   title: string
   detail: string
   price: number
+  features?: string[]
   country?: string
 }
 
@@ -30,13 +31,21 @@ export function catalogImage(id: string, variant?: string) {
   return `/images/catalogue/${id}${variant ? `-${variant.toLowerCase()}` : ''}.webp`
 }
 
+export function productPath(id: string) {
+  return `/produits/${id}`
+}
+
+export function catalogPath(group: CatalogProduct['group']) {
+  return `/?gamme=${group}#produits`
+}
+
 const internationalDeskCodes = ['US', 'BH', 'BR', 'CN', 'ES', 'FI', 'GR', 'LB', 'MR', 'PS', 'SO']
 const internationalDesk = countries.filter(({ code }) => internationalDeskCodes.includes(code))
 
 export const catalog: CatalogProduct[] = [
   { id: 'reception-maroc', price: 799, group: 'reception', category: 'nationaux', title: 'Drapeau marocain de réception', detail: 'Pour salles de réception, hôtels et espaces de représentation.' },
   { id: 'maroc-support-2m', price: 799, group: 'reception', category: 'nationaux', title: 'Drapeau marocain sur pied', detail: 'Support doré · 2 m' },
-  { id: 'france-velours-2m', price: 899, group: 'reception', category: 'internationaux', title: 'Drapeau français en velours', detail: 'Support doré · 2 m', country: 'FR' },
+  { id: 'france-velours-2m', price: 899, group: 'reception', category: 'internationaux', title: 'Drapeau français en velours', detail: 'Support doré · 2 m', country: 'FR', features: ['Drapeau en velours avec bordure dorée', 'Livré avec son support doré', 'Pour bureaux, hôtels et événements'] },
   { id: 'arabie-saoudite-velours', price: 899, group: 'reception', category: 'internationaux', title: 'Drapeau saoudien de réception', detail: 'Velours et support doré', country: 'SA' },
   { id: 'italie-velours-2m', price: 899, group: 'reception', category: 'internationaux', title: 'Drapeau italien en velours', detail: 'Support doré · 2 m', country: 'IT' },
   { id: standingFlagId, price: 799, group: 'reception', category: 'internationaux', title: 'Drapeau sur pied — pays au choix', detail: 'Support de 2 m · Maroc, Espagne, France, États-Unis, Allemagne, Italie, Chine et Union européenne.' },

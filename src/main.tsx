@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { MessageCircle } from 'lucide-react'
+import { catalog, productPath } from './catalog'
+import ProductPage from './components/ProductPage'
 import { useCart } from './cart'
 import Cart from './components/Cart'
 import Header from './components/Header'
@@ -17,6 +19,7 @@ import { Brand, quotePath } from './components/ui'
 import './styles.css'
 
 const path = window.location.pathname
+const product = catalog.find(item => productPath(item.id) === path.replace(/\/$/, ''))
 const isQuote = path === '/devis' || path === '/devis/'
 
 function redirectLegacyQuote() {
@@ -31,13 +34,14 @@ function App() {
   const cartDialog = useRef<HTMLDialogElement>(null)
   const [announcement, setAnnouncement] = useState('')
 
-  function addToCart(key: string, title: string) {
-    cart.change(key, 1)
+  function addToCart(key: string, title: string, quantity = 1) {
+    cart.change(key, quantity)
     setAnnouncement(`${title} ajouté au panier.`)
     cartDialog.current?.showModal()
   }
 
   useEffect(() => {
+    if (product) document.title = `${product.title} — CHD Drapeaux`
     if (isQuote) document.title = 'Demander un devis — CHD Drapeaux'
     if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return
     const observer = new IntersectionObserver(entries => {
@@ -51,12 +55,12 @@ function App() {
     return () => observer.disconnect()
   }, [])
 
-  if (path !== '/' && !isQuote) return <main className="not-found wrap"><Brand /><h1>Page introuvable</h1><p>Retrouvez nos drapeaux et le formulaire de devis depuis l’accueil.</p><a className="button red" href="/">Retour à l’accueil</a></main>
+  if (path !== '/' && !isQuote && !product) return <main className="not-found wrap"><Brand /><h1>Page introuvable</h1><p>Retrouvez nos drapeaux et le formulaire de devis depuis l’accueil.</p><a className="button red" href="/">Retour à l’accueil</a></main>
 
   return <>
     <a className="skip" href="#contenu">Aller au contenu</a>
     <Header count={cart.count} onOpenCart={() => cartDialog.current?.showModal()} />
-    <main id="contenu">{isQuote ? <QuoteForm /> : <><Hero /><Products onAdd={addToCart} /><Expertise /><Process /><Gallery /><Clients /><Contact /></>}</main>
+    <main id="contenu">{isQuote ? <QuoteForm /> : product ? <ProductPage product={product} onAdd={addToCart} /> : <><Hero /><Products onAdd={addToCart} /><Expertise /><Process /><Gallery /><Clients /><Contact /></>}</main>
     <Footer />
     <div className="sr-only" role="status">{announcement}</div>
     <Cart dialog={cartDialog} lines={cart.lines} onChange={cart.change} onRemove={cart.remove} />
