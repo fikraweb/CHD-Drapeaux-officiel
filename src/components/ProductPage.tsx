@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react'
 import { ArrowLeft, ShoppingBag } from 'lucide-react'
 import { catalogGroups, catalogImage, catalogPath, priceFormat, standingFlagId, standingFlagOptions, type CatalogProduct } from '../catalog'
 import { maxQuantity } from '../cart'
+import ProductZoom from './ProductZoom'
 import FlagSelect from './FlagSelect'
 import { Eyebrow } from './ui'
 
@@ -13,6 +14,7 @@ export default function ProductPage({ product, onAdd }: {
   const option = standingFlagOptions.find(item => item.code === code)
   const hasOptions = product.id === standingFlagId
   const title = option ? `${product.title} · ${option.name}` : product.title
+  const image = catalogImage(product.id, option?.code, true)
   const group = catalogGroups.find(item => item.id === product.group)
 
   function submit(event: FormEvent<HTMLFormElement>) {
@@ -25,7 +27,7 @@ export default function ProductPage({ product, onAdd }: {
   return <section className="section product-page"><div className="wrap">
     <a className="product-back" href={catalogPath(product.group)}><ArrowLeft size={17} /> Retour au catalogue</a>
     <div className="product-page-grid">
-      <div className="product-page-image"><img src={catalogImage(product.id, option?.code)} alt={title} fetchPriority="high" /></div>
+      <ProductZoom key={image} src={image} title={title} />
       <div className="product-page-copy">
         {group && <Eyebrow>{group.title}</Eyebrow>}
         <h1>{product.title}</h1>

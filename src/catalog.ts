@@ -27,8 +27,8 @@ export const standingFlagOptions = ['MA', 'ES', 'FR', 'US', 'DE', 'IT', 'CN', 'E
   name: code === 'EU' ? 'Union européenne' : countries.find(country => country.code === code)?.name ?? code,
 }))
 
-export function catalogImage(id: string, variant?: string) {
-  return `/images/catalogue/${id}${variant ? `-${variant.toLowerCase()}` : ''}.webp`
+export function catalogImage(id: string, variant?: string, hd = false) {
+  return `/images/catalogue/${hd ? 'hd/' : ''}${id}${variant ? `-${variant.toLowerCase()}` : ''}.webp`
 }
 
 export function productPath(id: string) {
