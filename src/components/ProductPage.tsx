@@ -16,7 +16,7 @@ export default function ProductPage({ product, onAdd }: {
   const option = options.find(item => item.code === code)
   const title = option ? `${product.title} · ${option.name}` : product.title
   const illustrative = usesIllustrativePhoto(product.id, option?.code)
-  const photoAlt = illustrative ? 'Drapeaux de bureau, visuel illustratif' : title
+  const photoAlt = illustrative ? 'Visuel illustratif du modèle de drapeau' : title
   const image = catalogImage(product.id, option?.code, true)
   const group = catalogGroups.find(item => item.id === product.group)
 
@@ -36,7 +36,7 @@ export default function ProductPage({ product, onAdd }: {
         <h1>{product.title}</h1>
         <p className="product-page-price">{priceFormat.format(product.price)}</p>
         <p className="product-page-detail">{product.detail}</p>
-        {illustrative && <p className="catalog-photo-note">Visuel illustratif du format de bureau.</p>}
+        {illustrative && <p className="catalog-photo-note">Visuel illustratif du format.</p>}
         {product.features && <ul className="product-features">{product.features.map(feature => <li key={feature}>{feature}</li>)}</ul>}
         <form className="product-purchase" onSubmit={submit}>
           {hasOptions && <FlagSelect options={options} value={code} onChange={setCode} />}

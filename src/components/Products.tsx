@@ -10,7 +10,7 @@ function ProductCard({ product, onAdd }: { product: CatalogProduct; onAdd: (key:
   const option = options.find(item => item.code === code)
   const title = option ? `${product.title} · ${option.name}` : product.title
   const illustrative = usesIllustrativePhoto(product.id, option?.code)
-  const photoAlt = illustrative ? 'Drapeaux de bureau, visuel illustratif' : title
+  const photoAlt = illustrative ? 'Visuel illustratif du modèle de drapeau' : title
 
   return <article className="product">
     <div className="image-frame"><img src={catalogImage(product.id, option?.code)} alt={photoAlt} loading="lazy" /></div>
