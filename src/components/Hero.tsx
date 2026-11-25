@@ -16,8 +16,8 @@ export default function Hero() {
       </div>
     </div>
     <picture>
-      <source media="(max-width: 850px)" srcSet="/images/hero-reception-mobile.webp" />
-      <img src="/images/hero-reception.webp" alt="Drapeaux de cérémonie sur supports dorés, avec le drapeau marocain au premier plan" fetchPriority="high" width="2172" height="724" />
+      <source media="(max-width: 850px)" srcSet="/images/hero-signature-mobile.webp" />
+      <img src="/images/hero-signature.webp" alt="Drapeaux de cérémonie sur supports dorés, avec le drapeau marocain au premier plan" fetchPriority="high" width="1672" height="941" />
     </picture>
   </section>
 }
