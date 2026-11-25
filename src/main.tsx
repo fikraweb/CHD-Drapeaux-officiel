@@ -17,6 +17,13 @@ import './styles.css'
 const path = window.location.pathname
 const isQuote = path === '/devis' || path === '/devis/'
 
+function redirectLegacyQuote() {
+  const legacyQuote = /^#devis(?:\/([a-z-]+))?$/.exec(window.location.hash)
+  if (path !== '/' || !legacyQuote) return false
+  window.location.replace(quotePath(legacyQuote[1]))
+  return true
+}
+
 function App() {
   useEffect(() => {
     if (isQuote) document.title = 'Demander un devis — CHD Drapeaux'
@@ -37,15 +44,13 @@ function App() {
   return <>
     <a className="skip" href="#contenu">Aller au contenu</a>
     <Header />
-    <main id="contenu">{isQuote ? <QuoteForm /> : <><Hero /><Expertise /><Products /><Process /><Gallery /><Clients /><Contact /></>}</main>
+    <main id="contenu">{isQuote ? <QuoteForm /> : <><Hero /><Products /><Expertise /><Process /><Gallery /><Clients /><Contact /></>}</main>
     <Footer />
     <a className="whatsapp" href={contactWhatsapp || '/#contact'} aria-label={contactWhatsapp ? 'Contacter CHD Drapeaux sur WhatsApp' : 'Voir les informations de contact WhatsApp'} title="WhatsApp"><MessageCircle size={28} strokeWidth={1.9} /></a>
   </>
 }
 
-const legacyQuote = /^#devis(?:\/([a-z-]+))?$/.exec(window.location.hash)
-if (path === '/' && legacyQuote) {
-  window.location.replace(quotePath(legacyQuote[1]))
-} else {
+if (path === '/') window.addEventListener('hashchange', redirectLegacyQuote)
+if (!redirectLegacyQuote()) {
   createRoot(document.getElementById('root')!).render(<App />)
 }
