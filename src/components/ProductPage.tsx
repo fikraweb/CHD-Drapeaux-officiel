@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { ArrowLeft, ShoppingBag } from 'lucide-react'
-import { catalogGroups, catalogImage, catalogPath, priceFormat, standingFlagId, standingFlagOptions, type CatalogProduct } from '../catalog'
+import { catalogGroups, catalogImage, catalogPath, priceFormat, catalogOptions, productCartKey, type CatalogProduct } from '../catalog'
 import { maxQuantity } from '../cart'
 import ProductZoom from './ProductZoom'
 import FlagSelect from './FlagSelect'
@@ -11,8 +11,9 @@ export default function ProductPage({ product, onAdd }: {
   onAdd: (key: string, title: string, quantity?: number) => void
 }) {
   const [code, setCode] = useState('')
-  const option = standingFlagOptions.find(item => item.code === code)
-  const hasOptions = product.id === standingFlagId
+  const options = catalogOptions(product.id)
+  const hasOptions = options.length > 0
+  const option = options.find(item => item.code === code)
   const title = option ? `${product.title} · ${option.name}` : product.title
   const image = catalogImage(product.id, option?.code, true)
   const group = catalogGroups.find(item => item.id === product.group)
@@ -21,7 +22,7 @@ export default function ProductPage({ product, onAdd }: {
     event.preventDefault()
     if (hasOptions && !option) return
     const quantity = new FormData(event.currentTarget).get('quantity')
-    onAdd(option ? `${product.id}:${option.code}` : product.id, title, Number(quantity))
+    onAdd(productCartKey(product.id, option?.code), title, Number(quantity))
   }
 
   return <section className="section product-page"><div className="wrap">
@@ -35,7 +36,7 @@ export default function ProductPage({ product, onAdd }: {
         <p className="product-page-detail">{product.detail}</p>
         {product.features && <ul className="product-features">{product.features.map(feature => <li key={feature}>{feature}</li>)}</ul>}
         <form className="product-purchase" onSubmit={submit}>
-          {hasOptions && <FlagSelect value={code} onChange={setCode} />}
+          {hasOptions && <FlagSelect options={options} value={code} onChange={setCode} />}
           <div className="product-purchase-controls">
             <label>Quantité<input name="quantity" type="number" min="1" max={maxQuantity} step="1" defaultValue="1" required /></label>
             <button type="submit" className="button" disabled={hasOptions && !option}><ShoppingBag size={18} /> Ajouter au panier</button>

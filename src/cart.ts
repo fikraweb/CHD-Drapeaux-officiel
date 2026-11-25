@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { catalog, standingFlagId, standingFlagOptions } from './catalog'
+import { catalog, catalogOptions, productCartKey } from './catalog'
 
 export type CartLine = { key: string; quantity: number }
 export const maxQuantity = 999
@@ -9,8 +9,9 @@ export function cartProduct(key: string) {
   const [id, code, extra] = key.split(':')
   const product = catalog.find(item => item.id === id)
   if (!product || extra !== undefined) return
-  const variant = standingFlagOptions.find(option => option.code === code)
-  if (id === standingFlagId ? !variant : code !== undefined) return
+  const options = catalogOptions(id)
+  const variant = options.find(option => option.code === code)
+  if (options.length ? !variant || productCartKey(id, code) !== key : code !== undefined) return
   return { product, variant }
 }
 
